@@ -1,0 +1,16 @@
+#include<cstdio>
+#include<vector>
+
+int main()
+{
+	int N, M1;
+	std::scanf("%d%d", &N , & M1 );
+	
+	int temp;
+	for( int i(0) ; i < M1 ; i++ )
+	{
+		std::scanf("%d", & temp );
+	}
+	
+	return 0;
+}

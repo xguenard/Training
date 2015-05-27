@@ -1,0 +1,32 @@
+#include<cstdio>
+
+
+typedef unsigned long long long_int;
+
+long_int factoriel( int N )
+{
+	if( N == 0 ) return 1;
+	long_int out(1);
+	for( int i(1) ; i <= N ; i++ )
+		out*=i;
+	return out;
+}
+
+long_int factoriel2( int N , int P )
+{
+	if( N == 0 || P == 0 ) return 1;
+	long_int out(1);
+	for( int i(P +1) ; i <= N ; i ++ )
+		out*=i;
+	return out;
+}
+
+int main()
+{
+	int N, P;
+	std::scanf("%d%d", & N , & P );
+
+	std::printf("%llu", factoriel2( N, P) / factoriel( P ) );
+
+	return 0;
+}
