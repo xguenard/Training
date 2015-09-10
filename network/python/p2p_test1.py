@@ -44,7 +44,7 @@ def CreateServer():
 def Client():
     s_client = socket.socket( socket.AF_INET , socket.SOCK_STREAM )
     host = adresse_cible
-    port = 8888
+    port = 8889
 
     try:
         s_client.connect( (host , port ))
