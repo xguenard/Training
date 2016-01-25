@@ -1,0 +1,133 @@
+#include<cstdio>
+#include<vector>
+
+class SumTree
+{
+public:
+    std::vector< int > data;
+    std::vector< int > tree;
+    int N;
+    int inline CLeft ( const int p ){ return (p << 1 )+1; }
+
+    int inline CRight ( const int p ){ return ( (p+1) << 1 )  ; }
+    
+    int inline Parent( const int p ){ return (p-1)>>1; }
+    
+    SumTree( std::vector< int > & A)
+    {
+        data = A;
+        N = (int)data.size();
+        tree.assign( 4 * N , 0 );
+        build_tree(0 , 0 , N - 1 );
+    }
+
+    void build_tree( int node, int L , int R )
+    {
+        if( L == R )
+        {
+            tree[node] = data[L];
+            data[L] = node;
+            return;
+        }
+
+        build_tree( CLeft( node ) , L , (L+R)/2 );
+        build_tree( CRight( node ) ,  (L+R)/2 +1 , R );
+        tree[ node ] = tree[ CLeft( node )]  + tree[ CRight( node )] ; 
+        return;
+    }
+
+
+    
+    void update( int p , int diff)
+    {
+        tree[ p ] += diff;
+        if( p != 0 )
+            update( Parent(p ) , diff);
+    }
+
+    void change_value( int position , int value )
+    {
+       int node = data[position];
+       int diff = value - tree[ node ] ;
+       tree[node] = value;
+
+       update( Parent(node) , diff );
+    }
+
+    int rmq( int i , int j ) { return rmq( 0  , 0 , N-1 , i , j ) ; }
+    
+private:
+    int rmq ( int p , int L , int R , int i , int j )
+    {
+        if( i > R || j < L ) return 0;
+
+        if( L >= i && R <= j ) return tree[p];
+
+        int p1 = rmq( CLeft( p ) , L , ( L + R )/2 , i , j );
+        int p2 = rmq( CRight( p ) , (L + R )/2 + 1 , R , i , j );
+        return p1 + p2;
+    }           
+};
+
+
+int main()
+{
+    int N;
+    std::scanf( "%d" , &N );
+    std::vector< int > data( N );
+
+    for( int i(0) ; i < N ; ++i )
+        std::scanf( "%d" , & data[i] );
+
+    SumTree sum_tree( data );
+
+    int R;
+    std::scanf("%d" , &R );
+
+    for( int i(0) ; i < R ; ++ i )
+    {
+        char c;
+        int a, b;
+        std::scanf( " %c %d %d" , &c , &a , &b );
+        if( c == 'M' )
+            sum_tree.change_value( a, b );
+        else
+            std::printf("%d\n", sum_tree.rmq( a , b ));
+    }
+    return 0;
+}
+
+int main()
+{
+    int N;
+    std::scanf( "%d" , &N );
+    std::vector< int > data( N );
+
+    for( int i(0) ; i < N ; ++i )
+        std::scanf( "%d" , & data[i] );
+    int *st = constructST(data, N);
+    
+    int R;
+    std::scanf("%d" , &R );
+
+    for( int i(0) ; i < R ; ++ i )
+    {
+        char c;
+        int a, b;
+        std::scanf( " %c %d %d" , &c , &a , &b );
+        if( c == 'M' )
+            updateValue( data, st, N, a ,  b);
+        else
+            std::printf("%d\n", getSum(st, N, a, b));
+    }
+    return 0;
+    // Print sum of values in array from index 1 to 3
+    printf("%d\n", );
+ 
+    // Update: set arr[1] = 10 and update corresponding segment
+    // tree nodes
+ 
+    // Find sum after the value is updated
+ 
+    return 0;
+}

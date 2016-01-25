@@ -11,6 +11,8 @@ private:
     int n;
     inline int Left( const int p ){ return p << 1 ;}
     inline int Right( const int p){ return (p << 1) + 1; }
+    inline int PLeft( const int p ){ return p >> 1; }
+    inline int PRight( const int p){ return (p >> 1) + 1;}
 
     void Build( int p , int L , int R )
     {
