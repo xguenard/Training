@@ -76,13 +76,11 @@ void divideEsImpera<2>(const std::pair<int , int > top_left)
 
 int main()
 {
-    data[1][1] = 'x';
+    int i,j;
+    std::scanf("%d%d", &i , &j );
+    data[i][j] = '#';
     divideEsImpera<Sz>(std::make_pair<int, int>(0, 0));
     print_data<Sz>();
-
-    int a;
-    std::cin >> a;
-
     return 0;
 }
 
